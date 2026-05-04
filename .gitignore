@@ -1,0 +1,3 @@
+# pasta build/ --- IGNORE ---
+build/
+/build/*
