@@ -14,8 +14,8 @@
 // =========================
 
 
-const char* = ssid "FIAP-IOT";
-const char* = password "F!@p25.IOT"
+#define ssid "Wokwi-GUEST";
+#define password "";
 
 // =========================
 // Variaveis
@@ -120,25 +120,6 @@ void updateLCD() {
 }
 
 
-void handleRoot() {
-  String html = "<html><body>";
-  html += "<h1>Smart Home</h1>";
-  html += "<p>IP: " + WiFi.localIP().toString() + "</p>";
-  html += "<p>Temp: " + String(temp) + "</p>";
-  html += "<p>Hum: " + String(hum) + "</p>";
-  html += "<p>LED1: " + String(led1State ? "ON":"OFF") + "</p>";
-  html += "<p>LED2: " + String(led2State ? "ON":"OFF") + "</p>";
-  html += "<p>Clima: " + String(extTemp) + "</p>";
-
-  html += "<button onclick=\"fetch('/api/led/1',{method:'POST'})\">LED1</button>";
-  html += "<button onclick=\"fetch('/api/led/2',{method:'POST'})\">LED2</button>";
-  html += "<button onclick=\"fetch('/api/weather')\">Clima</button>";
-
-  html += "</body></html>";
-
-  server.send(200, "text/html", html);
-}
-
 void apiTempHum() {
   readDHT();
 
@@ -153,6 +134,7 @@ void apiTempHum() {
 
   server.send(200, "application/json", res);
 }
+
 
 void apiLedGet(int led) {
   bool state = (led == 1) ? led1State : led2State;
@@ -257,7 +239,6 @@ void setup() {
     sendJsonError("Rota nao encontrada", 404);
   });
  
-  // IMPORTANTE: Habilitar CORS para o seu app React Native acessar
   server.enableCORS();
   server.begin();
   Serial.println("HTTP server iniciado");
